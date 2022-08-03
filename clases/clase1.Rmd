@@ -1,0 +1,14 @@
+library(datasets)
+data(iris)
+
+iris_data = iris
+
+dim(iris_data)
+str(iris_data)
+
+plot(cars$speed, cars$dist)
+scatter.smooth(cars$speed, cars$dist)
+cars
+
+linearMod <- lm(dist ~ speed, data = cars)
+summary(linearMod)
