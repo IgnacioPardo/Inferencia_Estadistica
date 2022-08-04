@@ -12,3 +12,4 @@ cars
 
 linearMod <- lm(dist ~ speed, data = cars)
 summary(linearMod)
+
