@@ -1,0 +1,284 @@
+---
+title: "Inferencia_Práctica2"
+author: "Selva Figueroa"
+date: "8/2/2022"
+output:
+  pdf_document: default
+---
+
+## Inferencia Estadística - Práctica II
+
+Para acceder a los datos que les permitirán resolver el siguiente ejercicio hagan click [aquí](https://docs.google.com/spreadsheets/d/1yZw9yedYnHm6P8w9DLigxN49jgLbv13dwVk0rjPZZFo/edit?usp=sharing).
+
+**Datos**
+
+La clase pasada comenzamos a trabajar con la información dada por la tienda de colchones DormiTown: tiempo de permanencia en página por sesión y la tasa de conversión. Cada uno de ustedes recibió 3 conjuntos de datos, para cada variable, de diferentes tamaños (n = 5, 30 y 100). Analicemos primero los datos de permanencia.
+
+**Distribución de los datos**
+
+Estos datos fueron inventados de tal forma que simulan la extracción de datos al azar de cierta población. O sea, provienen de la misma distribución.
+
+Por ejemplo, para n=5, cada uno de ustedes recibió:
+
+$$
+x_1, x_2, x_3, x_4, x_5 \; \longrightarrow datos
+$$
+
+que son realizaciones de 5 variables aleatorias $X_1, X_2, X_3, X_4, X_5 \; \sim F \; i.i.d.$
+
+Con estos 5 datos calcularon la media muestral
+
+$$
+\bar{x}_5= \frac{1}{5} \sum_{i = 1}^{5} x_i
+$$
+
+que es una realización de $\overline{X}_5$, variable aleatoria. Luego, repitieron esto para n=30 y n=100. De manera tal que cada uno de ustedes obtuvo una realización de las las variables aleatorias
+
+$$
+\overline{X}_5, \overline{X}_{30}, \overline{X}_{100}
+$$
+
+*Aclaración sobre el experimento: En la práctica (vida real) tenemos una sola muestra cuya distribución se DESCONOCE. En este caso, obtuvimos muchas muestras de diferentes tamaños porque son datos inventados (generados) a partir de una distribución conocida con fines puramente didácticos.*
+
+Conozco la distribucion con la que se generaron los datos ⇒ conozco $\mu$.
+
+**Histograma**
+
+**Tiempo medio de permanencia**
+
+Consideremos las medias de los tiempos de permanencia para las muestras de tamaño n=5 obtenidas por todos los alumnos
+
+$$
+\overline{x}_5^{(1)}, \overline{x}_5^{(2)}, \cdots, \overline{x}_5^{(N)}
+$$
+
+donde, por ejemplo, $\overline{x}_5^{(1)}$ es la media de Valentino y $\overline{x}_5^{(2)}$ la media de Zoe.
+
+Cada uno de estos valores $\overline{x}_5$ es una realización de $\overline{X}_5$. entonces si realizo un histograma con estos datos voy a tener una [aproximación a la densidad]{.ul} de $\overline{X}_5$.
+
+Cargamos primero algunas librerías:
+
+```{r}
+# Importamos los paqueres
+library(dplyr)
+library(ggplot2)
+```
+
+1.  Cargamos la base de datos con las medias obtenidas por cada uno de ustedes.
+
+    ```{r}
+    # Leemos los datos
+    datos <- read.csv('clases/practica2/recursos_practica_2/Archivo.csv')
+
+    # Exploramos los primeros valores del conjunto
+    names(datos)
+    
+    # A function that replaces a , with . in a string
+    replace_comma <- function(x) {
+        gsub(",", ".", x)
+    }
+
+    # Seleccionamos las columnas con R
+    medias5 <- as.numeric(replace_comma(datos$media5))
+    medias30 <- as.numeric(replace_comma(datos$media30))
+    medias100 <- as.numeric(replace_comma(datos$media100))
+    
+    medias5
+    medias30
+    medias100
+    ```
+
+2.  Primero trabajamos con el caso de n=5. Exploramos los datos.
+
+    ```{r}
+    # Vemos las medidas de resumen
+    summary(medias5)
+    ```
+
+    ¿Entre qué valores se encuentran los datos?
+
+3.  Ahora realizamos un histograma con la media de los tiempos de permanencia para el caso n = 5.
+
+    En R base:
+
+    ```{r}
+    # Graficamos el histograma de densidad
+    # También se puede hacer con el parámetro freq=FALSE
+    hist(medias5, probability = TRUE, main = "n = 5", xlab = "")
+    hist(medias30, probability = TRUE, main = "n = 30", xlab = "")
+    hist(medias100, probability = TRUE, main = "n = 100", xlab = "")
+    ```
+
+    En ggplot2, recordemos que los datos tienen que ingresar en forma de dataframe:
+
+    ```{r}
+    # Graficamos el histograma de densidad
+    ggplot(datos, aes(x=medias5, y=..density..)) + 
+                 geom_histogram() +
+                 ggtitle("n = 5") 
+    
+    ggplot(datos, aes(x = medias30, y = ..density..)) +
+        geom_histogram() +
+        ggtitle("n = 30")
+
+    ggplot(datos, aes(x = medias100, y = ..density..)) +
+        geom_histogram() +
+        ggtitle("n = 100")
+    ```
+
+    ¿Qué observan?
+
+    Repetimos para los casos n=30 y n=100.
+
+    ¿Qué pasa con el rango de valores? ¿Se concentran alrededor de algún valor?
+
+4.  Grafiquemos los 3 histogramas juntos para ver mejor los cambios. R permite la creación de una matriz de n x m figuras en una sola página. Cada figura tiene sus propios margenes. Para eso usamos
+
+    ```{r}
+    # Grilla para múltiples gráficos
+    par(mfrow = c(filas, columnas))
+    ```
+
+    La función $\texttt{par()}$ se utiliza para acceder a la lista de parámetros gráficos del dispositivo y para modificarla. Cuidado que produce cambios permanentes durante toda la sesión de R. La función $\texttt{mfrow()}$ define el tamaño de la matriz de figuras. En R base:
+
+    ```{r}
+    # Abrimos la grilla
+    par(mfrow = c(3,1))
+    hist(medias5, probability = TRUE, xlim = c(40, 120), main = "n = 5", xlab = "")
+    hist(medias30, probability = TRUE, xlim = c(40, 120), main = "n = 30", xlab = "")
+    hist(medias100, probability = TRUE, xlim = c(40, 120), main = "n = 100", xlab = "")
+    # Cerramos la grilla
+    par(mfrow = c(1,1))	
+    ```
+
+    En ggplot2 esto se puede hacer de muchas formas. Una posible es usar el paquete [Patchwork](https://patchwork.data-imaginist.com/articles/guides/assembly.html).
+
+    ```{r}
+    library(patchwork)
+    p1 <- ggplot(datos, aes(x=medias5, y=..density..)) + geom_histogram() + ggtitle("n = 5") 
+    p2 <- ggplot(datos, aes(x=medias30, y=..density..)) + geom_histogram() + ggtitle("n = 30") 
+    p3 <- ggplot(datos, aes(x=medias100, y=..density..)) + geom_histogram() + ggtitle("n = 100") 
+
+    p1 + p2 + p3
+    ```
+
+**Simulación**
+
+Para este experimento se generaron $N$ muestras (una por cada uno de ustedes), se calcularon las medias para cada muestra y se realizó un histograma con todas las medias. Esto podría haberlo realizado una sola persona. Y podría haber generado muchísimas más muestras, por ejemplo, $N=1000$, para poder obtener un histograma más preciso.
+
+Este 'experimento' se llama *simulación* o *Método de Montecarlo*. Es una técnica matemática que se utiliza para estimar los posibles resultados de un evento incierto. Es un herramienta que, con la ayuda de cualquier software (en particular R), nos permite entender diversas nociones de la Estadística.
+
+**Histograma en base a simulaciones de medias de los tiempos de permanencia**
+
+1.  Generamos una muestra de tamaño 10 con distribución $\mathcal{U}(10,170)$, calculamos la media y otras medidas de resumen con la función $\texttt{summary()}$.
+
+    ```{r}
+    # Sampleamos muestras de una distribución unifome 
+    tiempos10 <- runif(10, min=10, max=170)
+    ```
+
+2.  Generar 10000 muestras $Nrep=10000$ de tamaño 10, calcular las medias para cada una y hacer un histograma.
+
+    Podemos hacerlo con un *loop*:
+
+    ```{r}
+    # Vector numérico para guardar los datos
+    medias10 <- as.numeric(10000)
+
+    # Generamos los datos dentro del for
+    for (i in 1:10000){
+    	tiempos <- runif(10, min = 10, max = 170)
+    	medias10[i] <- mean(tiempos)
+    }
+    ```
+
+    Graficamos el histograma en R base:
+
+    ```{r}
+    # Agregar título y cambiar el color
+    hist(medias10, probability = TRUE)
+    ```
+
+    Graficamos el histograma en ggplot2:
+
+    ```{r}
+    # Pasamos el vector numérico a dataframe
+    data <- data.frame(value=medias10)
+
+    # Graficamos el histograma. Agregar el título.
+    ggplot(data, aes(x=value, y=..density..)) + geom_histogram() 
+    ```
+
+    También podemos hacerlo usando la función $\texttt{replicate()}$
+
+    ```{r}
+    replicate(n, exp, simplify = "array")
+    ```
+
+    donde $n$ es la cantidad de repeticiones o replicaciones, $exp$ es la expresión en R a repetir y $simplify$ indica si los resultados de las replicaciones se guardan en un $array$ (vectores o matrices) o en una lista.
+
+    ```{r}
+    medias10 <- replicate(10000, mean(runif(10, min = 10, max = 170)))
+    ```
+
+    Graficamos en R base:
+
+    ```{r}
+    hist(medias10, probability = TRUE)
+    ```
+
+    Graficamos en ggplot2:
+
+    ```{r}
+    # Completar con el plot en ggplot2
+    data <- data.frame(value = medias10)
+
+    # Graficamos el histograma. Agregar el título.
+    ggplot(data, aes(x = value, y = ..density..)) + geom_histogram() + ggtitle("Histograma de medias de tiempos de permanencia")
+    
+    ```
+
+3.  Repetimos el punto anterior para $n=30, 100, 1000$. Realizamos un histograma con cada tamaño de muestra y comparamos.
+
+```{r}
+
+simulate <- function(n, min, max) {
+    replicate(10000, mean(runif(n, min = min, max = max)))
+}
+
+# A function that takes a number and generates a vector of random bernoulli variables
+bernoulli <- function(n) {
+    replicate(n, runif(1, min = 0, max = 1))
+}
+
+# A function that takes a number and generates a vector of random binomial variables
+
+binomial <- function(n, p) {
+    replicate(n, rbinom(1, p, size = 1))
+}
+
+
+fggplot <- function(data, title) {
+    ggplot(data.frame(value = data), aes(x = value, y = ..density..)) + geom_histogram() + ggtitle(title)
+}
+
+n = 30
+fggplot(simulate(n, 10, 170), paste(c("Histograma de medias de tiempos de permanencia para n = " , n), collapse = " "))
+
+```
+
+**Tasa de conversión**
+
+Ahora estamos en condiciones de repetir todo lo anterior pero con la Tasa de conversión. Recordemos los pasos a seguir:
+
+1.  Armamos los histogramas con las proporciones muestrales halladas por cada uno de ustedes para n = 5, 30 y 100.
+2.  Comparamos los 3 histogramas.
+3.  ¿Qué distribución supone que sigue la tasa de conversión?
+4.  A medida que crece el tamaño de muestra... ¿alrededor de qué valor se concentran los histogramas?
+
+Simulamos datos de conversión:
+
+1.  Generamos 5 datos con una distribución Bernoulli con el valor de $p$ que deducimos del ítem anterior y calculamos el promedio.
+2.  Repetimos el ítem anterios $Nrep=1000$ veces y guardamos los promedios en el vector $\text{prom}_{\text{ber}_5}$.
+3.  Repetimos los items 1) y 2) para muestras de tamaño n = 30 y 100. Guardamo los promedios en los vectores $\text{prom}_{\text{ber}_{30}}$ y $\text{prom}_{\text{ber}_{100}}$.
+4.  Graficamos en una misma ventana los 3 histogramas. Comparamos. Tener cuidado con los márgenes de los gráficos.
