@@ -1,0 +1,22 @@
+# Actividad Practica 1
+
+testB5 <- read.table(file = "clases/practica2/recursos_practica_1/5.txt")
+testB30 <- read.table(file = "clases/practica2/recursos_practica_1/30.txt")
+testB100 <- read.table(file = "clases/practica2/recursos_practica_1/100.txt")
+
+mean_from <- function(df){
+    as.numeric(mean(as.numeric(df$tiempo)))
+}
+
+prop_from <- function(df){
+    as.numeric(sum(as.numeric(df$transaccion)) / nrow(df))
+}
+
+m5 <- mean_from(testB5)
+p5 <- rop_from(testB5)
+
+m30 <- mean_from(testB30)
+p30 <- prop_from(testB30)
+
+m100 <- mean_from(testB100)
+p100 <- prop_from(testB100)
