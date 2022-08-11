@@ -1,0 +1,233 @@
+---
+title: "Actividad en R - Clase 4"
+author: "Daniela Parada & Jazmín Vidal Domínguez"
+date: '2022-08-10'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# TEOREMA CENTRAL DEL LÍMITE
+
+Estudiaremos empíricamente la distribución del promedio de variables aleatorias independientes e idénticamente distribuidas. A través de los histogramas correspondientes, analizaremos el comportamiento de la distribución del promedio a medida que aumentamos $n$, la cantidad de variables a promediar.
+
+Para ello generaremos un conjunto de $n$ datos con una distribución dada y luego calcularemos su promedio. Replicaremos esto diez mil veces, es decir, generaremos $~{N_{rep}=10000}$ realizaciones de la variable aleatoria $\overline{X}_n$, para diferentes valores de $n$. Notemos que, en principio, desconocemos la distribución de $\overline{X}_n$. Utilizando las $~{N_{rep}=10000}$ realizaciones del promedio realizaremos un histograma de los promedios generados para obtener una aproximación de la densidad o de la función de probabilidad puntual de $\overline{X}_n$.
+
+Antes de empezar con nuestras simulaciones, recordemos el Teorema Central del Límite. Sea $(X_i)_{i\geq 1}$ una sucesión de variables aleatorias i.i.d. con $\mathbb E(X_i)=\mu$ y $\mathbb{V}(X_i)=\sigma^2$.
+
+Recordemos que el TCL establece que $$
+Z_n = \frac{\overline X_n-\mu}{\sqrt{\sigma^2/n}}\;{\color{red}\approx}\;
+\mathcal N(0,1)\;.
+$$
+
+donde ${\color{red}\approx}$ significa 'se distribuye aproximadamente como'.
+
+Si despejamos el promedio, tenemos que $$
+{\overline X_n} = Z_n \sqrt{\frac{\sigma^2}{n}} + \mu
+$$
+
+de donde se deduce esta otra posible representación:
+
+$$
+\overline X_n\;{\color{red}\approx}\;
+\mathcal N\left(\mu,\frac{\sigma^2}{n}\right).\;
+$$
+
+## Simulaciones de diferentes distribuciones
+
+Para lo que sigue, utilizaremos $X$ para denotar de manera genérica una variable con distribución $F$. Es decir, $X\sim F$. Generaremos $n$ datos con la distribución $F$, promediaremos y repetiremos $N_{rep}=10000$ veces para luego observar la distribución empírica de dichos promedios como postula la última relación.
+
+### Distribución Bernoulli asimétrica
+
+Sea $X\sim Be(p=0.2)$. Recordemos que $E(X)=0.2$ y $V(X)=0.16$.
+
+```{r}
+# X ~ Be(p=0.2)
+# E(X)=0.2, V(X)=0.16
+mu <- 0.2
+sigma2 <- 0.16
+
+# Generamos Nrep bernoullies p=0.2
+Nrep <- 10000
+ber_N_infty <- rbinom(Nrep, 1, 0.2)
+
+# Vemos la frecuencia absoluta de X=0, X=1
+table(ber_N_infty)
+# y la relativa
+table(ber_N_infty) / Nrep
+##RTA: Se observa lo esperado: la frecuencia relativa de X=0 es aprox 1-p y la de X=1 es p
+
+mean(ber_N_infty)
+var(ber_N_infty)
+```
+
+Se observa lo esperado: la media muestral y la varianza muestral son aproximaciones empíricas de $E(X)$ y $V(X)$ respectivamente.
+
+*Distribución de la media muestral para diferentes tamaños de muestra*
+
+Empecemos haciendo la simulación paso a paso. Comencemos con $n=5$. Para los próximos valores de $n$ haremos esto mismo pero con una sintaxis más corta.
+
+```{r}
+# Genero 5 datos con distribución X y promedio. Repito Nrep veces.
+ene <- 5
+promedios_bernoullies <- rep(NA, Nrep)
+for (n in 1:Nrep)
+{
+  promedios_bernoullies[n] <- mean(rbinom(ene, 1, 0.2))
+}
+```
+
+Observemos el histograma y superpongamos la densidad de la curva normal a la que, por TCL, debería converger con $n\rightarrow \infty$.
+
+```{r}
+# Hago un histograma. Sabemos que con n >>> grande deberíamos ver una N(u, sigma^2/n)
+hist(
+  promedios_bernoullies,
+  col = "steelblue",
+  probability = TRUE,
+  breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1), # se puede ajustar
+  xlab = "promedios de Nrep=10.000",
+  ylab = "",
+  main = "X_i ~ Be(0.2), i de 1 a n=5"
+)
+curve(dnorm(x, mu, sqrt(sigma2 / ene)),
+      add = TRUE,
+      col = "red",
+      lwd = 2)
+```
+
+La convergencia no parece ser buena y es razonable: $n=5$ podría no ser lo "suficientemente grande" (más tratándose de una distribución discreta y asimétrica).
+
+Aumentemos a $n=30$.
+
+```{r}
+# Repetimos lo anterior para n=30
+# Genero 30 datos con distribución X y promedio. Repito Nrep veces.
+ene <- 30
+promedios_bernoullies <- rep(NA, Nrep)
+for (n in 1:Nrep)
+{
+  promedios_bernoullies[n] <- mean(rbinom(ene, 1, 0.2))
+}
+
+# Hago un histograma. Sabemos que con n >>> grande deberíamos ver una N(u, sigma^2/n)
+hist(
+  promedios_bernoullies,
+  col = "steelblue",
+  probability = TRUE,
+  xlab = "promedios de Nrep=10.000",
+  ylab = "",
+  main = "X_i ~ Be(0.2), i de 1 a n=30"
+)
+curve(dnorm(x, mu, sqrt(sigma2 / ene)),
+      add = TRUE,
+      col = "red",
+      lwd = 2)
+```
+
+La aproximación parece mejorar respecto de $n=5$ pero tampoco parece lo suficientemente buena.
+
+Aumentemos a $n=100$.
+
+```{r}
+# Repetimos lo anterior para n=100
+# Genero 100 datos con distribución X y promedio. Repito Nrep veces.
+ene <- 100
+promedios_bernoullies <- rep(NA, Nrep)
+for (n in 1:Nrep)
+{
+  promedios_bernoullies[n] <- mean(rbinom(ene, 1, 0.2))
+}
+
+# Hago un histograma. Sabemos que con n >>> grande deberíamos ver una N(u, sigma^2/n)
+hist(
+  promedios_bernoullies,
+  col = "steelblue",
+  probability = TRUE,
+  xlab = "promedios de Nrep=10.000",
+  ylab = "",
+  main = "X_i ~ Be(0.2), i de 1 a n=100"
+)
+curve(dnorm(x, mu, sqrt(sigma2 / ene)),
+      add = TRUE,
+      col = "red",
+      lwd = 2)
+```
+
+La aproximación mejora notablemente respecto de sus anteriores para $n=5$ y $n=30$.
+
+Podemos simplificar la sintaxis como sigue y, así, evitar usar el for.
+
+```{r}
+# Sintaxis más corta para lo mismo
+promedios_bernoullies5 <- replicate(Nrep, mean(rbinom(5, 1, 0.2)))
+promedios_bernoullies30 <- replicate(Nrep, mean(rbinom(30, 1, 0.2)))
+promedios_bernoullies100 <- replicate(Nrep, mean(rbinom(100, 1, 0.2)))
+
+par(mfrow = c(3, 1))
+hist(promedios_bernoullies5,
+     probability = TRUE,
+     main = "")
+curve(dnorm(x, mean = mu, sd = sqrt(sigma2 / 5)), add = TRUE, col = "red")
+hist(promedios_bernoullies30,
+     probability = TRUE,
+     main = "")
+curve(dnorm(x, mean = mu, sd = sqrt(sigma2 / 30)), add = TRUE, col = "red")
+hist(promedios_bernoullies100,
+     probability = TRUE,
+     main = "")
+curve(dnorm(x, mean = mu, sd = sqrt(sigma2 / 100)), add = TRUE, col = "red")
+par(mfrow = c(1, 1))
+```
+
+También podemos usar "xlim" para fijar los límites del eje horizontal y no dejarnos engañar visualmente por las escalas. Así podemos ver el efecto que ocasiona en la dispersión el contar con un mayor $n$.
+
+```{r}
+# Con xlim para que se note mejor la diferencia en las escalas
+par(mfrow = c(3, 1))
+hist(
+  promedios_bernoullies5,
+  probability = TRUE,
+  xlim = c(0, 1),
+  main = ""
+)
+curve(dnorm(x, mean = mu, sd = sqrt(sigma2 / 5)), add = TRUE, col = "red")
+hist(
+  promedios_bernoullies30,
+  probability = TRUE,
+  xlim = c(0, 1),
+  main = ""
+)
+curve(dnorm(x, mean = mu, sd = sqrt(sigma2 / 30)), add = TRUE, col = "red")
+hist(
+  promedios_bernoullies100,
+  probability = TRUE,
+  xlim = c(0, 1),
+  main = ""
+)
+curve(dnorm(x, mean = mu, sd = sqrt(sigma2 / 100)), add = TRUE, col = "red")
+par(mfrow = c(1, 1))
+```
+
+En suma, observamos que, como es de esperar, a medida que $n$ aumenta la distribución del promedio se asemeja más al de una curva normal con media $E(X)$ y varianza $V(X)/n$. En particular, con $n=5$ y $n=30$ la aproximación es muy grosera.
+
+## Otras distribuciones
+
+Repetir los items anteriores con las siguientes distribuciones. Para eso debemos crear una nueva celda de código e inspirarnos en el código anterior.
+
+Algunos comandos útiles:
+
+```{r}
+help(replicate)
+help("rbinom")
+```
+
+Ahora sí:
+
+-   Distribución uniforme: $X \sim U(67, 73)$. Recordemos que $E(X)=70$ y $V(X)=3$.
+
+-   Distribución exponencial: $X \sim E(1/10)$. Recordemos que $E(X)=10$ y $V(X)=100$.
+
+-   Distribución normal: $X \sim N(70, 1.2)$. Recordemos que $E(X)=70$ y $V(X)=1.2$.
