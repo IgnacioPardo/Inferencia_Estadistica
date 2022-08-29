@@ -1,0 +1,102 @@
+---
+title: "TP2 Parte2"
+author: "Ignacio Pardo & Luca Mazzarello"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+Al igual que en la Actividad 1, en esta actividad generaremos muestras de una dis- tribución uniforme en el intervalo [0,3). Es decir, trabajaremos con v.a. $(X_i)_{i\geq1}$ i.i.d., $X_i \sim U(0,\theta)$ con $\theta = 3$ y calcularemos el ECME de los estimadores.
+
+$\hat\theta_n = \hat\theta_n(X_1,..., X_n) = 2\overline{X_n}$, y $\tilde\theta_n = \tilde\theta_n(X_1,..., X_n) = max\{X_1,..., X_n\}$.
+
+a)  Calculen, en base a simulaciones con `Nrep = 10000`, el error cuadrático medio empírico (ECME) de cada estimador $\hat\theta_n$ y $\tilde\theta_n$, para un tamaño de muestra de $n = 30$. ¿Cuál tiene menor ECME? ¿Guarda relación con los visto en la teórica?
+
+```{r}
+f_est1 <- function (q) {
+  2 * mean(q)
+}
+
+
+f_est2 <- function (q) {
+  max(q)
+}
+```
+
+```{r}
+ECME <- function(Nrep, unif_v, f){
+  mean((replicate(Nrep, f(unif_v))-3)^2)
+}
+
+```
+
+```{r}
+unif_vals <- function(cant){
+  runif(cant, 0, 3)
+}
+```
+
+```{r}
+Nrep = 10000
+```
+
+```{r}
+vals_30 = unif_vals(30)
+
+ECME_est1_30 <- ECME(Nrep, vals_30, f_est1)
+ECME_est2_30 <- ECME(Nrep, vals_30, f_est2)
+
+ECME_est1_30
+ECME_est2_30
+```
+
+b)  Repita el ítem anterior considerando ahora muestras de tamaño $n = 50$ y $n = 100$ y represente en una tabla, los ECME de cada estimador para cada tamaño de muestra $n＝30$, $n=50$ y $n=100$
+
+```{r}
+vals_50 = unif_vals(50)
+
+ECME_est1_50 <- ECME(Nrep, vals_50, f_est1)
+ECME_est2_50 <- ECME(Nrep, vals_50, f_est2)
+
+ECME_est1_50
+ECME_est2_50
+```
+
+```{r}
+vals_100 = unif_vals(100)
+
+ECME_est1_100 <- ECME(Nrep, vals_100, f_est1)
+ECME_est2_100 <- ECME(Nrep, vals_100, f_est2)
+
+ECME_est1_100
+ECME_est2_100
+```
+
+```{r}
+names(ECMEs)
+```
+
+```{r}
+
+ECMEs_est_1 = c(ECME_est1_30, ECME_est1_50, ECME_est1_100)
+ECMEs_est_2 = c(ECME_est2_30, ECME_est2_50, ECME_est2_100)
+
+ECMEs = data.frame(c(30, 50, 100), ECMEs_est_1, ECMEs_est_2)
+
+names(ECMEs)[names(ECMEs) == "ECMEs_est_1"] <- "theta^"
+names(ECMEs)[names(ECMEs) == "ECMEs_est_2"] <- "theta˜"
+names(ECMEs)[names(ECMEs) == "c.30..50..100."] <- "cant"
+
+ECMEs
+```
+
+i\. Para cada uno de los n's considerados, ¿qué estimador tiene menor EMCE? ¿Se
+mantiene la misma relación observada en el ítem anterior?
+
+ii. Para cada estimador, ¿qué ocurre con el ECME cuando n aumenta? ¿Cómo se
+relaciona lo que observa con lo visto en la teórica?
+
+c) Ahora calcule el ECME de ambos estimadores para cada tamaño de muestra entre
+$5$ y $50$ (es decir, $n = 5, n = 6, n = 7, . . . , n = 50$), siempre utilizando `Nrep = 10000`.
+Para cada estimador, guarde todos los ECMEs en un vector. Represente en un gráfico
+de dispersión el ECME de cada estimador versus el tamaño de muestra, utilizando
+colores distintos para cada estimador. ¿Qué observa? ¿Qué estimador elegiría?

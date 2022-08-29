@@ -1,0 +1,90 @@
+---
+title: "TP2 Parte1"
+author: "Ignacio Pardo"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r}
+
+est1 <- function (q) {
+  2 * mean(q)
+}
+
+
+est2 <- function (q) {
+  max(q)
+}
+
+```
+
+```{r}
+vals = runif(100, 0, 10)
+hist(vals, breaks = 100)
+```
+
+```{r}
+est1(vals)
+est2(vals)
+```
+
+```{r}
+vals_2 = c(1.17, 1.75, 0.28, 2.56, 2.36, 0.36, 1.82, 0.24, 1.17, 1.86)
+hist(vals_2, breaks = 10)
+```
+
+```{r}
+est1(vals_2)
+est2(vals_2)
+```
+
+```{r}
+vals_3 = c(0.66, 0.07, 0.62, 0.65, 1.33, 0.40, 1.17, 1.11, 2.01, 2.98)
+hist(vals_3, breaks = 10)
+```
+
+```{r}
+est1(vals_3)
+est2(vals_3)
+```
+
+```{r}
+Nrep = 1000
+n5 = 5
+n30 = 30
+n50 = 50
+t = 3
+
+n5_est1 = replicate(Nrep, est1(runif(n5, 0, t)))
+n5_est2 = replicate(Nrep, est2(runif(n5, 0, t)))
+
+n30_est1 = replicate(Nrep, est1(runif(n30, 0, t)))
+n30_est2 = replicate(Nrep, est2(runif(n30, 0, t)))
+
+n50_est1 = replicate(Nrep, est1(runif(n50, 0, t)))
+n50_est2 = replicate(Nrep, est2(runif(n50, 0, t)))
+```
+
+```{r}
+par(mfrow=c(3, 2))
+
+hist(n5_est1, probability = TRUE, col="darkmagenta")
+curve(dnorm(x, 3, sd(n5_est1)), add = TRUE, lwd=2, col="magenta")
+
+hist(n5_est2, probability = TRUE, col="darkmagenta")
+lines(density(n5_est2), col="magenta", lwd=2)
+
+hist(n30_est1, probability = TRUE, col="darkmagenta")
+curve(dnorm(x, 3, sd(n30_est1)), add = TRUE, lwd=2, col="magenta")
+
+hist(n30_est2, probability = TRUE, col="darkmagenta")
+lines(density(n30_est2), col="magenta", lwd=2)
+
+hist(n50_est1, probability = TRUE, col="darkmagenta")
+curve(dnorm(x, 3, sd(n50_est1)), add = TRUE, lwd=2, col="magenta")
+
+hist(n50_est2, probability = TRUE, col="darkmagenta")
+lines(density(n50_est2), col="magenta", lwd=2)
+
+par(mfrow=c(1, 1))
+```
