@@ -4,3 +4,6 @@
 [submodule "TP2_Inferencia_Estadistica"]
 	path = TP2_Inferencia_Estadistica
 	url = https://github.com/IgnacioPardo/TP2_Inferencia_Estadistica
+[submodule "TP3_Inferencia_Estadistica"]
+	path = TP3_Inferencia_Estadistica
+	url = https://github.com/IgnacioPardo/TP3_Inferencia_Estadistica
