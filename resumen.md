@@ -1,4 +1,4 @@
-# Resumen Inferencia Estadística
+# Resumen Inferencia Estadística en Markdown + $\LaTeX$
 
 ## Introducción
 
