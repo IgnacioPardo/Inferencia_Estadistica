@@ -1,10 +1,13 @@
 ---
-title : "Resumen Primer Parcial Inferencia Estadística"
+title: "Resumen Primer Parcial Inferencia Estadística"
 author: "Ignacio Pardo"
-output: html_document
+output:
+  pdf_document: 
+    keep_tex: yes
+  html_document: default
 ---
 
-# Resumen Primer Parcial Inferencia Estadística en Markdown + $\LaTeX$ {#resumen-inferencia-estadística-en-markdown-latex}
+# Resumen Primer Parcial Inferencia Estadística {#resumen-primer-parcial-inferencia-estadística}
 
 ## Introducción {#introducción}
 
@@ -16,7 +19,7 @@ Resumen de la materia de inferencia estadística de la Licenciatura en Tecnolog�
 
 <!-- code_chunk_output -->
 
--   [Resumen Primer Parcial Inferencia Estadística en Markdown + $\LaTeX$](#resumen-inferencia-estadística-en-markdown-latex)
+-   [Resumen Primer Parcial Inferencia Estadística](#resumen-primer-parcial-inferencia-estadística)
     -   [Introducción](#introducción)
     -   [Contenido](#contenido)
     -   [Esperanza](#esperanza)
@@ -63,8 +66,10 @@ Resumen de la materia de inferencia estadística de la Licenciatura en Tecnolog�
 ## Esperanza {#esperanza}
 
 $$
-    {\operatorname{E}(X)=\sum_{i=1}^{n}x_{i}\operatorname{F_x}(x_i)}\\
+\begin{align*}
+    {\operatorname{E}(X)=\sum_{i=1}^{n}x_{i}\operatorname{F_x}(x_i)} \\
     \operatorname{E}(\overline{X}_n)= \frac{1}{n}\times\sum_{i=1}^{n}{\operatorname {E}(X_i)}
+\end{align*}
 $$
 
 Si $X$ y $Y$ son variables aleatorias con esperanza finita y ${a,b,c \in \mathbb {R} }$ son constantes entonces
@@ -80,7 +85,7 @@ Si $X$ y $Y$ son variables aleatorias con esperanza finita y ${a,b,c \in \mathbb
 
 ## Varianza {#varianza}
 
-$\operatorname {Var}[X]=\operatorname {E} [X^{2}]-\operatorname {E} [X]^{2} ⟹ \operatorname {E} [X^{2}] = \operatorname {Var}[X] + \operatorname {E} [X]^{2}$
+$\operatorname {Var}[X]=\operatorname {E} [X^{2}]-\operatorname {E} [X]^{2} \implies \operatorname {E} [X^{2}] = \operatorname {Var}[X] + \operatorname {E} [X]^{2}$
 
 Sean $X$ y $Y$ dos variables aleatorias con varianza finita y ${a\in \mathbb {R} }$
 
@@ -101,7 +106,7 @@ ${\operatorname {Cov} (X,Y)=\operatorname {E} \left[XY\right]-\operatorname {E} 
 
 ### Correlación {#correlación}
 
-$ρ_{xy} = {\frac{\operatorname{cov}_{xy}}{\sigma_x\sigma_y}} = {\frac{\operatorname{cov}_{xy}}{\operatorname{SD}(x)\operatorname{SD}(y)}}$
+$\rho_{xy} = {\frac{\operatorname{cov}_{xy}}{\sigma_x\sigma_y}} = {\frac{\operatorname{cov}_{xy}}{\operatorname{SD}(x)\operatorname{SD}(y)}}$
 
 ## Continuas {#continuas}
 
@@ -120,17 +125,19 @@ Si ${X\sim N(\mu ,\sigma ^{2})}$ y ${a,b\in \mathbb {R} }$, entonces ${aX+b\sim 
 
 Si ${X\,\sim N(\mu ,\sigma ^{2})\,}$, entonces ${Z={\frac {X-\mu }{\sigma }}\!}$ es una variable aleatoria normal estándar: $Z$ \~ $N(0,1)$.
 
-$${X\,\sim N(\mu, \sigma ^{2}) ⟹ Z={\frac {X-\mu }{\sigma }} \sim N(0,1)}$$
+$${X\,\sim N(\mu, \sigma ^{2}) \implies Z={\frac {X-\mu }{\sigma }} \sim N(0,1)}$$
 
-$${Z\sim N(0,1) ⟹ X = \sigma Z + \mu \sim N(\mu, \sigma ^{2})}$$
+$${Z\sim N(0,1) \implies X = \sigma Z + \mu \sim N(\mu, \sigma ^{2})}$$
 
 $$
-    X \sim N(\mu, \sigma^2) \\
-    X+b \sim N(\mu+b, \sigma^2) \\
-    aX \sim N(a \times \mu, a^2 \times \sigma^2) \\
-    \frac{X - \mu}{\sigma} \sim N(0, 1) \\
-    \overline{X}_n \sim N(\mu, \sigma^2/n) \text{, si } X_i \text{ son i.i.d}\\
-    \frac{\overline{X}_n - \mu}{\sigma/\sqrt{n}} \sim N(0, 1) \text{, si } X_i \text{ son i.i.d} \\
+\begin{align}
+    X & \sim N(\mu, \sigma^2) \\
+    X+b & \sim N(\mu+b, \sigma^2) \\
+    aX & \sim N(a \times \mu, a^2 \times \sigma^2) \\
+    \frac{X - \mu}{\sigma} & \sim N(0, 1) \\
+    \overline{X}_n & \sim N(\mu, \sigma^2/n) \text{, si } X_i \text{ son i.i.d}\\
+    \frac{\overline{X}_n - \mu}{\sigma/\sqrt{n}} & \sim N(0, 1) \text{, si } X_i \text{ son i.i.d} \\
+\end{align}
 $$
 
 #### Función acumulada {#función-acumulada}
@@ -142,18 +149,22 @@ $$
 ### Distribución Uniforme {#distribución-uniforme}
 
 $$
-    \operatorname{P} (a<X<b)=\frac {1}{b-a} \\\
-    \operatorname{E}(X) = \frac{a+b}{2} \\
-    \operatorname{Var}(X) = \frac{(b-a)^2}{12}
+\begin{align}
+    \operatorname{P} (a<X<b) & =\frac {1}{b-a} \\\
+    \operatorname{E}(X) & = \frac{a+b}{2} \\
+    \operatorname{Var}(X) & = \frac{(b-a)^2}{12}
+\end{align}
 $$
 
 ### Distribución Exponencial {#distribución-exponencial}
 
 $$
-    \operatorname{f_X}(X) = \lambda e^{-\lambda X} \text{, para } X \geq 0 \\
-    \operatorname{F_X}(x) = \operatorname{P} (X>x)=1-e^{-\lambda x} \\\
-    \operatorname{E}(X) = \frac{1}{\lambda} \\
-    \operatorname{Var}(X) = \frac{1}{\lambda^2}
+\begin{align}
+    \operatorname{f_X}(X) & = \lambda e^{-\lambda X} \text{, para } X \geq 0 \\
+    \operatorname{F_X}(x) & = \operatorname{P} (X>x)=1-e^{-\lambda x} \\\
+    \operatorname{E}(X) & = \frac{1}{\lambda} \\
+    \operatorname{Var}(X) & = \frac{1}{\lambda^2}
+\end{align}
 $$
 
 ## Discretas {#discretas}
@@ -161,26 +172,32 @@ $$
 ### Distribución Bernoulli {#distribución-bernoulli}
 
 $$
-    \operatorname{P}(X=1) = p \\
-    \operatorname{P}(X=0) = 1-p \\
-    \operatorname{E}(X) = p \\
-    \operatorname{Var}(X) = p(1-p)
+\begin{align}
+    \operatorname{P}(X=1) & = p \\
+    \operatorname{P}(X=0) & = 1-p \\
+    \operatorname{E}(X) & = p \\
+    \operatorname{Var}(X) & = p(1-p)
+\end{align}
 $$
 
 ### Distribución Binomial {#distribución-binomial}
 
 $$
-    {\operatorname {P} (X=k)=\binom {n}{k}p^{k}(1-p)^{n-k}} \\
-    {\operatorname {E} (X)=np} \\
-    {\operatorname {Var} (X)=np(1-p)}
+\begin{align}
+    {\operatorname {P} (X=k) & =\binom {n}{k}p^{k}(1-p)^{n-k}} \\
+    {\operatorname {E} (X) & =np} \\
+    {\operatorname {Var} (X) & =np(1-p)}
+\begin{align}
 $$
 
 ### Distribución Poisson {#distribución-poisson}
 
 $$
-    \operatorname{P}(X=k) = \frac{\lambda^k e^{-\lambda}}{k!} \\
-    \operatorname{E}(X) = \lambda \\
-    \operatorname{Var}(X) = \lambda
+\begin{align}
+    \operatorname{P}(X=k) & = \frac{\lambda^k e^{-\lambda}}{k!} \\
+    \operatorname{E}(X) & = \lambda \\
+    \operatorname{Var}(X) & = \lambda
+\begin{align}
 $$
 
 ## Convergencia en Probabilidad {#convergencia-en-probabilidad}
@@ -267,15 +284,19 @@ $$
 ### Error Estándar {#error-estándar}
 
 $$
-    \operatorname{SE}(\hat{\theta}_n) = \sqrt{\operatorname{Var}(\hat{\theta}_n)}\\
-    \operatorname{Var}(\hat{\theta}_n) = \operatorname{E}[(\hat{\theta}_n - \operatorname{E}(\hat{\theta}_n))^2]
+\begin{align*}
+    & \operatorname{SE}(\hat{\theta}_n) = \sqrt{\operatorname{Var}(\hat{\theta}_n)}\\
+    & \operatorname{Var}(\hat{\theta}_n) = \operatorname{E}[(\hat{\theta}_n - \operatorname{E}(\hat{\theta}_n))^2]
+\end{align*}
 $$
 
 ### Error Cuadrático Medio {#error-cuadrático-medio}
 
 $$
-    \operatorname{ECME}(\hat{\theta}_n) = \operatorname{Sesgo}(\hat{\theta}_n)^2 + \operatorname{Var}(\hat{\theta}_n) \\
-    \operatorname{ECME}(\hat{\theta}_n) = \operatorname{E}[(\hat{\theta}_n - \theta)^2]
+\begin{align*}
+    & \operatorname{ECME}(\hat{\theta}_n) = \operatorname{Sesgo}(\hat{\theta}_n)^2 + \operatorname{Var}(\hat{\theta}_n) \\
+    & \operatorname{ECME}(\hat{\theta}_n) = \operatorname{E}[(\hat{\theta}_n - \theta)^2]
+\end{align*}
 $$
 
 ## Desigualdad de Chebyshev {#desigualdad-de-chebyshev}
@@ -307,10 +328,12 @@ $$
 $$
 
 $$
-    \operatorname{E}(X) = \mu \\
-    \operatorname{E}(X^2) = \mu^2 + \sigma^2 \\
-    \operatorname{E}(X^3) = \mu^3 + 3\mu\sigma^2 \\
-    \operatorname{E}(X^4) = \mu^4 + 6\mu^2\sigma^2 + 3\sigma^4
+\begin{align*}
+    & \operatorname{E}(X) = \mu \\
+    & \operatorname{E}(X^2) = \mu^2 + \sigma^2 \\
+    & \operatorname{E}(X^3) = \mu^3 + 3\mu\sigma^2 \\
+    & \operatorname{E}(X^4) = \mu^4 + 6\mu^2\sigma^2 + 3\sigma^4
+\end{align}
 $$
 
 ## Estimación por Máxima Verosimilitud (Likelihood) {#estimación-por-máxima-verosimilitud-likelihood}
@@ -322,13 +345,13 @@ $$
 ### Log-likelihood {#log-likelihood}
 
 $$
-    \mathcal{l}(\theta; \underline{X}) = \ln(\mathcal{L}(\theta; \underline{X})) = \sum_{i=1}^n \ln(f(\theta; x_i))
+    \ell(\theta; \underline{X}) = \ln(\mathcal{L}(\theta; \underline{X})) = \sum_{i=1}^n \ln(f(\theta; x_i))
 $$
 
 #### Optimización {#optimización}
 
 $$
-    \frac{d\mathcal{l}(\theta; \underline{X})}{d\theta} = \frac{d\ln(\mathcal{L}(\theta; \underline{X}))}{d\theta} = \sum_{i=1}^n \frac{d\ln(f(\theta; x_i))}{d\theta} = 0
+    \frac{d\ell(\theta; \underline{X})}{d\theta} = \frac{d\ln(\mathcal{L}(\theta; \underline{X}))}{d\theta} = \sum_{i=1}^n \frac{d\ln(f(\theta; x_i))}{d\theta} = 0
 $$
 
 ## Intervalos de Confianza {#intervalos-de-confianza}
@@ -342,12 +365,14 @@ Sea $Z = \frac{\overline{X}_{n} - \mu}{\sigma/\sqrt{n}} \sim \operatorname{N}(0,
 El intervalo de confianza $1-\alpha$ es:
 
 $$
-    \operatorname{P}(-z \leq Z \leq z) = 1 - \alpha \\
-    \phi(z) =  \operatorname{P}(Z \leq z) = 1 - \alpha/2 \\
-    \operatorname{P}(-z_{\alpha/2} \leq \frac{\overline{X}_{n} - \mu}{\sigma/\sqrt{n}} \leq z_{\alpha/2}) = 1 - \alpha \\
-    P(\hat{\mu}_n - z_{\alpha/2} \frac{\hat{\sigma}}{\sqrt{n}} \leq \mu \leq \hat{\mu}_n + z_{\alpha/2} \frac{\hat{\sigma}}{\sqrt{n}}) = 1 - \alpha \\
+\begin{align*}
+    \operatorname{P}(-z \leq Z \leq z) & = 1 - \alpha \\
+    \phi(z) =  \operatorname{P}(Z \leq z) & = 1 - \alpha/2 \\
+    \operatorname{P}(-z_{\alpha/2} \leq \frac{\overline{X}_{n} - \mu}{\sigma/\sqrt{n}} \leq z_{\alpha/2}) & = 1 - \alpha \\
+    P(\hat{\mu}_n - z_{\alpha/2} \frac{\hat{\sigma}}{\sqrt{n}} \leq \mu \leq \hat{\mu}_n + z_{\alpha/2} \frac{\hat{\sigma}}{\sqrt{n}}) & = 1 - \alpha \\
     \text{IC = }(\hat{\mu}_n - z_{\alpha/2} \frac{\hat{\sigma}}{\sqrt{n}} \text{, } \hat{\mu}_n + z_{\alpha/2} \frac{\hat{\sigma}}{\sqrt{n}}) \\
     \overline{X}_{n} \pm z_{\alpha/2} \frac{\hat{\sigma}}{\sqrt{n}}
+\end{align}
 $$
 
 ### T-Student {#t-student}
@@ -360,9 +385,9 @@ El intervalo de confianza $1-\alpha$ es:
 
 $$
 \begin{align*}
-    \operatorname{P}(-t_{n-1,\alpha/2} \leq T \leq t_{n-1,\alpha/2}) = 1 - \alpha \\
-    \operatorname{P}(\hat{\mu}_n - t_{n-1,\alpha/2} \sqrt{\frac{s^2}{n}} \leq \mu \leq \hat{\mu}_n + t_{n-1,\alpha/2} \sqrt{\frac{s^2}{n}}) = 1 - \alpha \\
-    \operatorname{P}(\hat{\mu}_n - t_{n-1,\alpha/2} \frac{s}{\sqrt{n}} \leq \mu \leq \hat{\mu}_n + t_{n-1,\alpha/2} \frac{s}{\sqrt{n}}) = 1 - \alpha \\
+    \operatorname{P}(-t_{n-1,\alpha/2} \leq T \leq t_{n-1,\alpha/2}) & = 1 - \alpha \\
+    \operatorname{P}(\hat{\mu}_n - t_{n-1,\alpha/2} \sqrt{\frac{s^2}{n}} \leq \mu \leq \hat{\mu}_n + t_{n-1,\alpha/2} \sqrt{\frac{s^2}{n}}) & = 1 - \alpha \\
+    \operatorname{P}(\hat{\mu}_n - t_{n-1,\alpha/2} \frac{s}{\sqrt{n}} \leq \mu \leq \hat{\mu}_n + t_{n-1,\alpha/2} \frac{s}{\sqrt{n}}) & = 1 - \alpha \\
     \text{IC = }(\hat{\mu}_n - t_{n-1,\alpha/2} \frac{s}{\sqrt{n}} \text{, } \hat{\mu}_n + t_{n-1,\alpha/2} \frac{s}{\sqrt{n}}) \\
     \overline{X}_{n} \pm t_{n-1,\alpha/2} \frac{s}{\sqrt{n}}
 \end{align*}
