@@ -58,7 +58,7 @@ Resumen de la materia de inferencia estad√≠stica de la Licenciatura en Tecnolog√
 $
     {\operatorname {E} (X)=\sum _{i=1}^{n}x_{i}\operatorname {F_x}(x_i)} \\
     \operatorname {E} (\overline{X}_n) = \frac{1}{n} \times \sum_{i=1}^{n}{\operatorname {E} (X_i)}
-$$
+$
 
 Si $X$ y $Y$ son variables aleatorias con esperanza finita y ${a,b,c \in \mathbb {R} }$ son constantes entonces
 
