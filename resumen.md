@@ -10,7 +10,7 @@ Resumen de la materia de inferencia estadística de la Licenciatura en Tecnolog�
 
 <!-- code_chunk_output -->
 
-- [Resumen Inferencia Estadística](#resumen-inferencia-estadística)
+- [Resumen Inferencia Estadística en Markdown + $\LaTeX$](#resumen-inferencia-estadística-en-markdown-latex)
   - [Introducción](#introducción)
   - [Contenido](#contenido)
   - [Esperanza](#esperanza)
