@@ -1,5 +1,58 @@
 # Resumen Inferencia Estadística
 
+## Introducción
+
+Resumen de la materia de inferencia estadística de la Licenciatura en Tecnología Digital en la Universidad Torcuato Di Tella.
+
+## Contenido
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+- [Resumen Inferencia Estadística](#resumen-inferencia-estadística)
+  - [Introducción](#introducción)
+  - [Contenido](#contenido)
+  - [Esperanza](#esperanza)
+  - [Varianza](#varianza)
+    - [Desvío Estándar](#desvío-estándar)
+    - [Covarianza](#covarianza)
+    - [Correlación](#correlación)
+  - [Continuas](#continuas)
+    - [Distribución Normal](#distribución-normal)
+      - [Función acumulada](#función-acumulada)
+    - [Distribución Uniforme](#distribución-uniforme)
+    - [Distribución Exponencial](#distribución-exponencial)
+  - [Discretas](#discretas)
+    - [Distribución Bernoulli](#distribución-bernoulli)
+    - [Distribución Binomial](#distribución-binomial)
+    - [Distribución Poisson](#distribución-poisson)
+  - [Convergencia en Probabilidad](#convergencia-en-probabilidad)
+    - [Propiedades](#propiedades)
+  - [Estimación por LGN](#estimación-por-lgn)
+    - [Estimación Esperanza](#estimación-esperanza)
+    - [Estimación Varianza](#estimación-varianza)
+    - [Estimación Proporción](#estimación-proporción)
+    - [Estimación de Probabilidad](#estimación-de-probabilidad)
+  - [Formulas Consistencia](#formulas-consistencia)
+    - [Sesgo](#sesgo)
+      - [Asintóticamente Insesgado](#asintóticamente-insesgado)
+    - [Error Estándar](#error-estándar)
+    - [Error Cuadrático Medio](#error-cuadrático-medio)
+  - [Desigualdad de Chebyshev](#desigualdad-de-chebyshev)
+  - [Desigualdad de Markov](#desigualdad-de-markov)
+  - [Momentos](#momentos)
+    - [Momentos de una variable aleatoria](#momentos-de-una-variable-aleatoria)
+      - [Discreta](#discreta)
+      - [Continua](#continua)
+  - [Estimación por Máxima Verosimilitud (Likelihood)](#estimación-por-máxima-verosimilitud-likelihood)
+    - [Log-likelihood](#log-likelihood)
+  - [Intervalos de Confianza](#intervalos-de-confianza)
+    - [Intervalo de Confianza para $\mu$](#intervalo-de-confianza-para-mu)
+    - [T-Student](#t-student)
+
+<!-- /code_chunk_output -->
+
 ## Esperanza
 
 $
@@ -62,7 +115,7 @@ Si ${X\,\sim N(\mu ,\sigma ^{2})\,}$, entonces ${Z={\frac {X-\mu }{\sigma }}\!}$
 
 $${X\,\sim N(\mu, \sigma ^{2}) ⟹ Z={\frac {X-\mu }{\sigma }} \sim N(0,1)}$$
 
-$${Z\sim N(0,1) ⟹ X = \sigma Z + μ \sim N(\mu, \sigma ^{2})}$$
+$${Z\sim N(0,1) ⟹ X = \sigma Z + \mu \sim N(\mu, \sigma ^{2})}$$
 
 $$
     X \sim N(\mu, \sigma^2) \\
@@ -76,7 +129,7 @@ $$
 #### Función acumulada
 
 $
-    \operatorname{f}(x) = \operatorname{\phi}(x) = \frac{1}{\sqrt{2 \times π \times \sigma^2}} \times e^{-\frac{(x-\mu)^2}{2 \times \sigma^2}}
+    \operatorname{f}(x) = \operatorname{\phi}(x) = \frac{1}{\sqrt{2 \times \pi \times \sigma^2}} \times e^{-\frac{(x-\mu)^2}{2 \times \sigma^2}}
 $
 
 ### Distribución Uniforme
@@ -211,6 +264,41 @@ $
     \operatorname{ECME}(\hat{\theta}_n) = \operatorname{E}[(\hat{\theta}_n - \theta)^2]
 $
 
+## Desigualdad de Chebyshev
+
+$
+    \operatorname{P}(|X - \mu| \geq \epsilon) \leq \frac{\operatorname{Var}(X)}{\epsilon^2}
+$
+
+## Desigualdad de Markov
+
+$
+    \operatorname{P}(X > \epsilon) \leq \frac{\operatorname{E}(X)}{\epsilon}
+$
+
+## Momentos
+
+### Momentos de una variable aleatoria
+
+#### Discreta
+
+$
+    m_{k} = \operatorname{E}(X^{k}) = \sum_{i=1}^{n}{(x_i - \overline{x}) ^ k}
+$
+
+#### Continua
+
+$
+    m_{k} = \int_{\mathbb{R}} x^k f(x) dx
+$
+
+$
+    \operatorname{E}(X) = \mu \\
+    \operatorname{E}(X^2) = \mu^2 + \sigma^2 \\
+    \operatorname{E}(X^3) = \mu^3 + 3\mu\sigma^2 \\
+    \operatorname{E}(X^4) = \mu^4 + 6\mu^2\sigma^2 + 3\sigma^4
+$
+
 ## Estimación por Máxima Verosimilitud (Likelihood)
 
 $
@@ -248,7 +336,7 @@ $
     \overline{X}_{n} \pm z_{\alpha/2} \frac{\hat{\sigma}}{\sqrt{n}}
 $
 
-### T - Student
+### T-Student
 
 Si $\sigma^2$ es desconocido, entonces $\overline{X}_n$ es insesgado y su varianza es $s^2/n$
 
