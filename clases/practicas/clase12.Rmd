@@ -1,0 +1,67 @@
+---
+title: "Clase 12"
+author: "Tomás Glauberman - Ignacio Pardo"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r}
+datos <- read.table('datos_DNI_43243336.txt', header = TRUE)
+```
+
+```{r}
+datosA <- datos[datos$version == "A",  ]
+datosB <- datos[datos$version == "B",  ]
+
+meanA <- mean(datosA$tiempo)
+meanB <- mean(datosB$tiempo)
+
+meanA
+meanB
+
+if (meanB > meanA){
+  "B"
+} else if (meanB < meanA){
+  "A"
+} else {
+  "iguales"
+}
+```
+
+```{r}
+boxplot(datos$tiempo ~ datos$version)
+```
+
+```{r}
+ic_dif_medias <- function (d1, d2, nivel){
+  m1 = mean(d1)
+  m2 = mean(d2)
+  
+  n1 = length(d1)
+  n2 = length(d2)
+  
+  v1 = var(d1)
+  v2 = var(d2)
+  
+  alpha = 1 - nivel
+  z_alpha_2 = qnorm(1 - (alpha/2))
+  
+  dif = m1 - m2
+  desvio = sqrt(v1/n1 + v2/n2)
+  
+  c(dif - z_alpha_2 * desvio, dif + z_alpha_2 * desvio)
+}
+```
+
+```{r}
+ic_dif_medias(datosA$tiempo, datosB$tiempo, 0.99)
+```
+
+```{r}
+datosJazmin = read.table("datos_DNI_33.txt", header = TRUE)
+datosJA <- datosJazmin[datosJazmin$version == "A",  ]
+datosJB <- datosJazmin[datosJazmin$version == "B",  ]
+ic_dif_medias(datosJA$tiempo, datosJB$tiempo, 0.99)
+
+```
+
